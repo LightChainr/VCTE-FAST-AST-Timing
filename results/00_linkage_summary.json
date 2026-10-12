@@ -1,0 +1,31 @@
+{
+  "eligible_patients": 8079,
+  "linked_patients": 3905,
+  "source1_methods": {
+    "unlinked": 4766,
+    "dob_sex_department_encounter": 2941,
+    "laboratory_fingerprint": 372
+  },
+  "source2_methods": {
+    "unlinked": 4451,
+    "national_id_bridge": 2994,
+    "dob_sex_department_encounter": 634
+  },
+  "linked_persons": 3427,
+  "linked_records_in_multi_record_persons": 842,
+  "persons_with_multiple_records": 364,
+  "both_sources": 3036,
+  "source2_only": 592,
+  "source2_rule_conflicts_with_source1": 2,
+  "source1_rule_reference_agreement": 0.9883268482490273,
+  "source1_rule_false_link_fraction": 0.007502344482650828,
+  "source2_rule_reference_agreement": 0.9974311926605505,
+  "source2_rule_reference_recovered": 2725,
+  "source2_rule_false_link_fraction": 0.005600238308013107,
+  "new_export_rows_through_lab_end": 509852,
+  "new_export_persons": 29469,
+  "new_export_national_id_coverage": 0.9838109882867969,
+  "new_events_frozen": 95591,
+  "new_AST_events": 8580,
+  "laboratory_end": "2026-08-13"
+}

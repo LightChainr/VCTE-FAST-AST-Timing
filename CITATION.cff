@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the archived release."
+title: "Aspartate aminotransferase from another date changes FibroScan-AST classification: reference change values identify results at risk: analysis code and aggregate results"
+type: software
+version: "1.0.0"
+date-released: "2026-10-12"
+repository-code: "https://github.com/LightChainr/VCTE-FAST-AST-Timing"
+license: MIT
+authors:
+  - family-names: Yu
+    given-names: Hong-wei
+    affiliation: "Department of Clinical Laboratory, Shanghai Pudong Hospital (Fudan University Pudong Medical Center), Shanghai, China"
+  - family-names: Ying
+    given-names: Hongyu
+    affiliation: "Department of Clinical Laboratory, Shanghai Pudong Hospital (Fudan University Pudong Medical Center), Shanghai, China"
+  - family-names: Zhang
+    given-names: Ze
+    affiliation: "Department of Clinical Laboratory, Shanghai Pudong Hospital (Fudan University Pudong Medical Center), Shanghai, China"
+  - family-names: Qiao
+    given-names: Chunping
+    affiliation: "Department of Gastroenterology, Shanghai Pudong Hospital (Fudan University Pudong Medical Center), Shanghai, China"
+  - family-names: Dong
+    given-names: Chang
+    affiliation: "Department of Clinical Laboratory, Shanghai Pudong Hospital (Fudan University Pudong Medical Center), Shanghai, China"
+keywords:
+  - biological variation
+  - reference change value
+  - aspartate aminotransferase
+  - post-analytical phase
+  - transient elastography
+  - FibroScan-AST

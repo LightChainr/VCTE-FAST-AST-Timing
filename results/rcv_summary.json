@@ -1,0 +1,32 @@
+{
+  "CVI": 9.5,
+  "CVA_primary": 4.75,
+  "rcv_up": 0.34122417866995836,
+  "rcv_down": 0.2544124868136046,
+  "workload": {
+    "scored_scans": 4287,
+    "flagged": 1399,
+    "nonconcurrent_scans": 1621,
+    "nonconcurrent_flagged": 628,
+    "flagged_by_category": {
+      "indeterminate": 645,
+      "rule_out": 635,
+      "rule_in": 119
+    },
+    "scans_by_category": {
+      "rule_out": 2906,
+      "indeterminate": 1032,
+      "rule_in": 349
+    }
+  },
+  "masld_wcv": {
+    "total_wCV": 16.3,
+    "CVI": 15.59,
+    "rcv_up": 0.5665164410993222,
+    "rcv_down": 0.36164091626243144,
+    "workload": {
+      "flagged": 2142,
+      "nonconcurrent_flagged": 901
+    }
+  }
+}

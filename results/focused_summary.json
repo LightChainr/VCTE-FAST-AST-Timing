@@ -1,0 +1,255 @@
+{
+  "excluded_1day_comparisons": 4,
+  "ck_hbvdna": {
+    "comparisons_CK_measured": 114,
+    "comparisons_CK_high": 8,
+    "HBsAg_DNA_status": {
+      "not_HBsAg": 605,
+      "detectable": 158,
+      "undetectable": 106,
+      "untested": 10
+    }
+  },
+  "anchor_scans": 712,
+  "anchor_patients": 558,
+  "anchor_comparisons": 879,
+  "actual_reclassification_strata": [
+    {
+      "stratum": "reference_category",
+      "level": "indeterminate",
+      "n": 343,
+      "patients": 237,
+      "changed": 128,
+      "proportion": 0.37317784256559766,
+      "ci_low": 0.32101739030478194,
+      "ci_high": 0.42559675655976675
+    },
+    {
+      "stratum": "reference_category",
+      "level": "rule_in",
+      "n": 142,
+      "patients": 102,
+      "changed": 49,
+      "proportion": 0.34507042253521125,
+      "ci_low": 0.2675140719893349,
+      "ci_high": 0.4324372244585011
+    },
+    {
+      "stratum": "reference_category",
+      "level": "rule_out",
+      "n": 394,
+      "patients": 269,
+      "changed": 67,
+      "proportion": 0.1700507614213198,
+      "ci_low": 0.1326530612244898,
+      "ci_high": 0.20912138961159019
+    },
+    {
+      "stratum": "direction",
+      "level": "earlier",
+      "n": 362,
+      "patients": 287,
+      "changed": 87,
+      "proportion": 0.24033149171270718,
+      "ci_low": 0.1978319783197832,
+      "ci_high": 0.28491658376061835
+    },
+    {
+      "stratum": "direction",
+      "level": "later",
+      "n": 517,
+      "patients": 437,
+      "changed": 157,
+      "proportion": 0.3036750483558994,
+      "ci_low": 0.26730113636363634,
+      "ci_high": 0.3434358832224686
+    },
+    {
+      "stratum": "lag_band",
+      "level": "1-7",
+      "n": 82,
+      "patients": 71,
+      "changed": 25,
+      "proportion": 0.3048780487804878,
+      "ci_low": 0.2068523430592396,
+      "ci_high": 0.40963855421686746
+    },
+    {
+      "stratum": "lag_band",
+      "level": "8-30",
+      "n": 253,
+      "patients": 205,
+      "changed": 76,
+      "proportion": 0.30039525691699603,
+      "ci_low": 0.2471019397314218,
+      "ci_high": 0.35714285714285715
+    },
+    {
+      "stratum": "lag_band",
+      "level": "31-60",
+      "n": 287,
+      "patients": 217,
+      "changed": 90,
+      "proportion": 0.313588850174216,
+      "ci_low": 0.25872727272727275,
+      "ci_high": 0.3689707699913484
+    },
+    {
+      "stratum": "lag_band",
+      "level": "61-90",
+      "n": 257,
+      "patients": 180,
+      "changed": 53,
+      "proportion": 0.20622568093385213,
+      "ci_low": 0.1581140350877193,
+      "ci_high": 0.25547856868448493
+    },
+    {
+      "stratum": "etiology_earlier",
+      "level": "HBsAg_positive",
+      "n": 112,
+      "patients": 88,
+      "changed": 17,
+      "proportion": 0.15178571428571427,
+      "ci_low": 0.09089046199701938,
+      "ci_high": 0.21699138638228052
+    },
+    {
+      "stratum": "etiology_later",
+      "level": "HBsAg_positive",
+      "n": 162,
+      "patients": 138,
+      "changed": 42,
+      "proportion": 0.25925925925925924,
+      "ci_low": 0.19078164160401004,
+      "ci_high": 0.33132705239562904
+    },
+    {
+      "stratum": "etiology_earlier",
+      "level": "MASLD_compatible",
+      "n": 140,
+      "patients": 115,
+      "changed": 41,
+      "proportion": 0.29285714285714287,
+      "ci_low": 0.22387568735271013,
+      "ci_high": 0.362962962962963
+    },
+    {
+      "stratum": "etiology_later",
+      "level": "MASLD_compatible",
+      "n": 227,
+      "patients": 194,
+      "changed": 83,
+      "proportion": 0.3656387665198238,
+      "ci_low": 0.3043432971014493,
+      "ci_high": 0.43058004840940517
+    },
+    {
+      "stratum": "etiology_earlier",
+      "level": "anti_HCV_positive",
+      "n": 4,
+      "patients": 3,
+      "changed": 1,
+      "proportion": 0.25,
+      "ci_low": 0.0,
+      "ci_high": 0.5
+    },
+    {
+      "stratum": "etiology_later",
+      "level": "anti_HCV_positive",
+      "n": 5,
+      "patients": 5,
+      "changed": 3,
+      "proportion": 0.6,
+      "ci_low": 0.2,
+      "ci_high": 1.0
+    },
+    {
+      "stratum": "etiology_earlier",
+      "level": "other_or_undetermined",
+      "n": 106,
+      "patients": 85,
+      "changed": 28,
+      "proportion": 0.2641509433962264,
+      "ci_low": 0.18446601941747573,
+      "ci_high": 0.35
+    },
+    {
+      "stratum": "etiology_later",
+      "level": "other_or_undetermined",
+      "n": 123,
+      "patients": 104,
+      "changed": 29,
+      "proportion": 0.23577235772357724,
+      "ci_low": 0.16666666666666666,
+      "ci_high": 0.3125
+    },
+    {
+      "stratum": "etiology_group",
+      "level": "HBsAg_positive",
+      "n": 274,
+      "patients": 173,
+      "changed": 59,
+      "proportion": 0.21532846715328466,
+      "ci_low": 0.16729968890425162,
+      "ci_high": 0.26800103092783506
+    },
+    {
+      "stratum": "etiology_group",
+      "level": "MASLD_compatible",
+      "n": 367,
+      "patients": 248,
+      "changed": 124,
+      "proportion": 0.33787465940054495,
+      "ci_low": 0.2894606381392575,
+      "ci_high": 0.38843368217750623
+    },
+    {
+      "stratum": "etiology_group",
+      "level": "anti_HCV_positive",
+      "n": 9,
+      "patients": 6,
+      "changed": 4,
+      "proportion": 0.4444444444444444,
+      "ci_low": 0.2222222222222222,
+      "ci_high": 0.7142857142857143
+    },
+    {
+      "stratum": "etiology_group",
+      "level": "other_or_undetermined",
+      "n": 229,
+      "patients": 144,
+      "changed": 57,
+      "proportion": 0.24890829694323144,
+      "ci_low": 0.2,
+      "ci_high": 0.3083710733253736
+    }
+  ],
+  "thresholds": [
+    {
+      "boundary": 0.35,
+      "unreachable": 0,
+      "n": 9562,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "required_AST_p25": 30.810755176462102,
+      "required_AST_median": 37.64809630401712,
+      "required_AST_p75": 46.82829739186951,
+      "required_AST_le40": 5553
+    },
+    {
+      "boundary": 0.67,
+      "unreachable": 2221,
+      "n": 9562,
+      "ci_low": 0.22304911426036703,
+      "ci_high": 0.2416270609549425,
+      "required_AST_p25": 75.91341312901963,
+      "required_AST_median": 123.06754069247906,
+      "required_AST_p75": 241.88060629420588,
+      "required_AST_le40": 174
+    }
+  ],
+  "AST_over100_events": 391,
+  "AST_over200_events": 117,
+  "clinical_history_missing_patients": 1043
+}

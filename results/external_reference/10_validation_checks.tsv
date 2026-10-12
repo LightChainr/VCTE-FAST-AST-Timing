@@ -1,0 +1,23 @@
+check	passed	detail
+NHANES 2017-2020 sample size	True	observed=7213; expected=7213
+NHANES 2021-2023 sample size	True	observed=4960; expected=4960
+Japan community sample size	True	observed=950; expected=950
+CORONASH sample size	True	observed=186; expected=186
+Singapore T2DM sample size	True	observed=436; expected=436
+German CAD sample size	True	observed=120; expected=120
+CORONASH +25 movement	True	17/186
+CORONASH 0.67 unreachable	True	107/186
+CORONASH indeterminate stability	True	6/22
+Singapore T2DM +25 movement	True	46/436
+Singapore T2DM 0.67 unreachable	True	144/436
+Singapore T2DM indeterminate stability	True	19/63
+German CAD +25 movement	True	10/120
+German CAD 0.67 unreachable	True	66/120
+German CAD indeterminate stability	True	4/13
+NHANES 2017-2020 FAST monotonicity	True	passed
+NHANES 2021-2023 FAST monotonicity	True	passed
+Japan community FAST monotonicity	True	passed
+CORONASH FAST monotonicity	True	passed
+Singapore T2DM FAST monotonicity	True	passed
+German CAD FAST monotonicity	True	passed
+German FAST reproduction	True	max_error=1.249e-16

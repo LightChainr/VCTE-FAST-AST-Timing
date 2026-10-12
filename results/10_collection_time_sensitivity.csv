@@ -1,0 +1,12 @@
+dataset,rule,scans,denominator_scans,patients,unique_AST,later_n,reused_n,median_lag,rule_out,indeterminate,rule_in
+collection_time_subset,prior_90,34,5077,28,33,0,2,6.5,20,7,7
+collection_time_subset,same_day,35,5077,34,35,0,0,0.0,25,8,2
+collection_time_subset,later_90,38,5077,33,38,38,0,10.0,24,11,3
+collection_time_subset,available_at_scan,38,5077,32,37,0,2,4.5,24,7,7
+collection_time_subset,symmetric_1,48,5077,46,48,6,0,0.0,35,8,5
+collection_time_subset,symmetric_3,55,5077,51,55,8,0,0.0,38,10,7
+collection_time_subset,symmetric_7,60,5077,55,60,11,0,0.0,39,13,8
+collection_time_subset,symmetric_14,64,5077,59,64,13,0,0.0,39,17,8
+collection_time_subset,symmetric_30,67,5077,60,67,14,0,0.0,42,17,8
+collection_time_subset,symmetric_60,72,5077,62,70,18,4,1.0,47,17,8
+collection_time_subset,symmetric_90,78,5077,65,74,20,8,1.0,51,18,9

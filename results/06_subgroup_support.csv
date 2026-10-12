@@ -1,0 +1,8 @@
+subgroup,linked_scans,linked_patients,same_day,prior,wide,later,reuse
+all,5077,3427,2666,1225,4287,866,422
+HBsAg_positive,2034,1181,1297,423,1840,256,148
+viral_markers_negative,1347,941,587,425,1123,289,129
+MASLD_compatible,1828,1396,817,459,1496,404,133
+diabetes_any,605,473,279,230,559,130,47
+BMI_ge25,2763,1963,1377,691,2314,516,205
+metabolic_steatosis_275,2364,1761,1154,581,1967,466,153

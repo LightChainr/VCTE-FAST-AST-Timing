@@ -1,0 +1,5 @@
+group,patients,female_n,BMI_ge25_n,metabolic_steatosis_n,LSM_ge9_5_n,gastro_referral_n,infectious_referral_n,HBsAg_tested,HBsAg_positive,anti_HCV_tested,anti_HCV_positive,diabetes_any,MASLD_compatible,viral_markers_negative,diagnosis_record_available,fatty_history,diabetes_history,viral_history,alcohol_history,autoimmune_history,drug_history,age_at_scan,bmi,lsm,cap
+All patients,7601,2963,4091,3563,2140,5271,698,2144,1181,954,32,432,1349,941,2384,583,316,30,11,28,7,44.5 (35.7-57.1),25.4 (23.0-28.1),7.5 (6.0-9.9),273.2 (238.0-295.9)
+Laboratory-linked,3427,1295,1880,1649,1128,2497,350,2144,1181,954,32,432,1349,941,2384,583,316,30,11,28,7,43.5 (35.3-56.4),25.5 (23.0-28.3),7.9 (6.2-10.6),274.3 (237.2-297.8)
+Not linked,4174,1668,2211,1914,1012,2774,348,0,0,0,0,0,0,0,0,0,0,0,0,0,0,45.4 (36.2-57.7),25.3 (22.9-27.8),7.3 (5.9-9.4),272.4 (238.6-294.4)
+Paired-comparison patients,558,168,337,304,240,448,60,389,173,239,7,73,247,211,392,128,45,9,2,11,4,42.6 (35.2-54.7),26.0 (23.7-28.8),8.9 (7.1-12.1),280.0 (251.1-304.8)
