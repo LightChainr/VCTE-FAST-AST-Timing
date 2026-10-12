@@ -1,5 +1,7 @@
 # VCTE-FAST-AST-Timing
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23319355.svg)](https://doi.org/10.5281/zenodo.23319355)
+
 Analysis code and aggregate results for:
 
 > Yu H-w, Ying H, Zhang Z, Qiao C, Dong C. *Aspartate aminotransferase from another date changes FibroScan-AST classification: reference change values identify results at risk.* Manuscript submitted to Clinica Chimica Acta (2026).
@@ -28,6 +30,10 @@ Patient-level data are not included because they contain confidential patient in
 ## Environment
 
 Python 3.11.15; numpy 2.3.5; pandas 2.3.3; scipy 1.16.3; scikit-learn 1.9.0; statsmodels 0.14.6; matplotlib 3.10.0.
+
+## Citation
+
+Please cite the archived release: https://doi.org/10.5281/zenodo.23319355 (v1.0.0).
 
 ## License
 
