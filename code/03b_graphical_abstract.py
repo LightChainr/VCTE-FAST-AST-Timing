@@ -73,7 +73,7 @@ def header(x, y, num, s, col=NAVY):
 
 
 # Title (one message per panel; detail stays in the paper)
-T(WCM/2, 4.66, 'AST from another date changes FibroScan-AST (FAST) more often than Agile',
+T(WCM/2, 4.66, 'AST from another date reclassifies FibroScan-AST (FAST) more often than Agile',
   fontsize=8.4, fontweight='bold', color=NAVY)
 T(WCM/2, 4.33, f'{n_scan:,} scans · {n_pat:,} patients · {n_cmp} comparisons with same-day AST', fontsize=6.0, color=MUTED)
 

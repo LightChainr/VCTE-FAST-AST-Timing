@@ -4,7 +4,7 @@
 
 Analysis code and aggregate results for:
 
-> Yu H-w, Ying H, Zhang Z, Qiao C, Dong C. *Aspartate aminotransferase from another date changes FibroScan-AST more often than Agile classification: reference change values identify results at risk.* Manuscript submitted to Clinical Biochemistry (2026).
+> Yu H-w, Ying H, Zhang Z, Qiao C, Dong C. *Aspartate aminotransferase from another date reclassifies FibroScan-AST more often than Agile: reference change values identify results at risk.* Manuscript submitted to Clinical Biochemistry (2026).
 
 The FibroScan-aspartate aminotransferase (FAST) score combines liver stiffness (LSM) and controlled attenuation parameter (CAP) from vibration-controlled transient elastography with AST. In routine practice the AST is often measured on another date. This study compared FAST calculated with the nearest earlier or later AST (≤90 days) with FAST from same-day AST for the same scan, repeated the comparison for Agile 3+, Agile 4 and FIB-4, and evaluated a laboratory flag based on the reference change value (RCV) of AST.
 
@@ -35,10 +35,11 @@ Python 3.11.15; numpy 2.3.5; pandas 2.3.3; scipy 1.16.3; scikit-learn 1.9.0; sta
 
 ## Citation
 
-Please cite the archived release. v1.1.1 (Clinical Biochemistry submission): https://doi.org/10.5281/zenodo.23612516. v1.1.0: https://doi.org/10.5281/zenodo.23611397. All versions: https://doi.org/10.5281/zenodo.23319354. v1.0.0: https://doi.org/10.5281/zenodo.23319355.
+Please cite the archived release. v1.1.2 (Clinical Biochemistry submission): DOI to be added after archiving. v1.1.1: https://doi.org/10.5281/zenodo.23612516. v1.1.0: https://doi.org/10.5281/zenodo.23611397. All versions: https://doi.org/10.5281/zenodo.23319354. v1.0.0: https://doi.org/10.5281/zenodo.23319355.
 
 ## Versions
 
+- v1.1.2 (2026-10-24): manuscript title revised; graphical abstract title updated accordingly. Analysis scripts and all results are unchanged from v1.1.0.
 - v1.1.1 (2026-10-24): figure scripts only. Main figures reorganized (Figure 1: direction of FAST change and the four-score comparison; Figure 2: how the RCV flag works, its performance and the reporting steps); former panels moved to Supplementary Figs. S5 and S10; graphical abstract simplified. Analysis scripts and all results are unchanged from v1.1.0.
 - v1.1.0 (2026-10-24): adds the Agile 3+, Agile 4 and FIB-4 comparison (amendment 29) and post hoc checks of the RCV flag (amendment 30); figures and banner graphical abstract updated; FAST formula written with the natural logarithm (ln), as in the original derivation.
 - v1.0.0 (2026-10-12): FAST analyses.

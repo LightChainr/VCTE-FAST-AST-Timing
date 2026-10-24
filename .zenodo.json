@@ -1,7 +1,7 @@
 {
-  "title": "Aspartate aminotransferase from another date changes FibroScan-AST more often than Agile classification: reference change values identify results at risk: analysis code and aggregate results",
+  "title": "Aspartate aminotransferase from another date reclassifies FibroScan-AST more often than Agile: reference change values identify results at risk: analysis code and aggregate results",
   "upload_type": "software",
-  "description": "Analysis code and aggregate results for a laboratory study of the FibroScan-aspartate aminotransferase (FAST) score. In 5,077 vibration-controlled transient elastography scans from 3,427 patients linked to laboratory records, FAST calculated with the nearest earlier or later AST (90 days or less) was compared with FAST from same-day AST for the same scan; the comparison was repeated for Agile 3+, Agile 4 and FIB-4, and a reporting flag based on the reference change value (RCV) of AST was evaluated and compared with simpler rules. Patient-level data are not included; the aggregate result tables behind every number in the manuscript are provided. Version 1.1.1 accompanies the Clinical Biochemistry submission; it updates the figure scripts only, and analysis scripts and results are unchanged from v1.1.0.",
+  "description": "Analysis code and aggregate results for a laboratory study of the FibroScan-aspartate aminotransferase (FAST) score. In 5,077 vibration-controlled transient elastography scans from 3,427 patients linked to laboratory records, FAST calculated with the nearest earlier or later AST (90 days or less) was compared with FAST from same-day AST for the same scan; the comparison was repeated for Agile 3+, Agile 4 and FIB-4, and a reporting flag based on the reference change value (RCV) of AST was evaluated and compared with simpler rules. Patient-level data are not included; the aggregate result tables behind every number in the manuscript are provided. Version 1.1.2 accompanies the Clinical Biochemistry submission; analysis scripts and results are unchanged from v1.1.0.",
   "creators": [
     {
       "name": "Yu, Hong-wei",
@@ -25,7 +25,7 @@
     }
   ],
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "publication_date": "2026-10-24",
   "access_right": "open",
   "keywords": [
