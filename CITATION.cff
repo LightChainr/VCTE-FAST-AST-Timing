@@ -2,9 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the archived release."
 title: "Aspartate aminotransferase from another date changes FibroScan-AST more often than Agile classification: reference change values identify results at risk: analysis code and aggregate results"
 type: software
-version: "1.1.0"
+version: "1.1.1"
 date-released: "2026-10-24"
-doi: "10.5281/zenodo.23611397"
 repository-code: "https://github.com/LightChainr/VCTE-FAST-AST-Timing"
 license: MIT
 authors:

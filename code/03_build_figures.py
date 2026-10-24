@@ -197,33 +197,46 @@ def transition_bw(ax,direction):
     ax.set_xlabel(f'{direction.capitalize()} AST category');ax.set_ylabel('Same-day category')
     for sp in ax.spines.values():sp.set_visible(False)
 
-with matplotlib.rc_context(MAINRC):
-    # Figure 1: reclassification when same-day AST is replaced by earlier or later AST.
-    fig,ax=plate_main('Figure_1',['Observed FAST change','Direction of reclassification','Earlier vs same-day AST','Later vs same-day AST'])
-    for d,col,mk,fc in [('earlier',DARK,'o',DARK),('later',LIGHT,'^','white')]:
-        g=A[A.direction.eq(d)]
-        ax[0].scatter(g.lag,g.delta_FAST,s=9,marker=mk,facecolors=fc,edgecolors=col,linewidths=.6,alpha=.8,label=f'{d.capitalize()} AST (n={len(g)})')
-    ax[0].axhline(0,color=GREY,lw=.8);ax[0].axvline(0,color=GREY,lw=.6,ls=':')
-    ax[0].set(xlabel='AST date minus scan date (days)',ylabel='Nonconcurrent minus same-day FAST',xlim=(-95,95),ylim=(-.65,.8))
-    ax[0].legend(frameon=False,loc='upper center',ncol=2,markerscale=1.3,handletextpad=.3,columnspacing=1.0)
-    z=T('03_observed_anchor_reclassification.csv').query("dataset=='linked'").set_index('direction').loc[['earlier','later']]
-    for i,(d,r) in enumerate(z.iterrows()):
-        ax[1].barh(i,-r.downward,height=.5,color=DARK,edgecolor=DARK,label='Lower category' if i==0 else None)
-        ax[1].barh(i,r.upward,height=.5,color='white',edgecolor=DARK,hatch='////',lw=.6,label='Higher category' if i==0 else None)
-        ax[1].text(-r.downward-4,i,str(int(r.downward)),ha='right',va='center',fontsize=8)
-        ax[1].text(r.upward+4,i,str(int(r.upward)),ha='left',va='center',fontsize=8)
-        ax[1].text(0,i-.36,f"{int(r.discordant)}/{int(r.comparisons)} reclassified, {100*r.proportion:.1f}% ({100*r.ci_low:.1f}–{100*r.ci_high:.1f})",ha='center',va='center',fontsize=7.5)
-    ax[1].set_yticks(range(2),['Earlier AST','Later AST']);ax[1].invert_yaxis();ax[1].axvline(0,color='black',lw=.6)
-    ax[1].set(xlabel='Comparisons',xlim=(-175,175),ylim=(1.6,-.6))
-    ax[1].set_xticks([-150,-100,-50,0,50,100,150],['150','100','50','0','50','100','150'])
-    ax[1].legend(frameon=False,loc='lower right')
-    transition_bw(ax[2],'earlier');transition_bw(ax[3],'later')
-    save(fig,'Figure_1','固定同一次扫描的 LSM/CAP，用真实较早或较晚 AST 替代同日 AST：A 为 FAST 变化与间隔，B 为下调/上调例数及改判比例，C–D 为分类矩阵。')
+UNCH='#D0D0D0'   # unchanged / reference; blue = lower category, orange = higher category throughout
 
-    # Figure 2: scan-specific thresholds judged against the RCV of AST.
-    RCV=json.loads((m.TABLES/'rcv_summary.json').read_text());RUP,RDN=RCV['rcv_up'],RCV['rcv_down']
-    RF=T('23_rcv_threshold_flag.csv').query("analysis=='primary'")
-    fig,ax=plate_main('Figure_2',['AST required for rule-in','AST change vs RCV','Reclassification by RCV flag','Reporting check'])
+def transition_pct(ax,direction):
+    """Same-day (rows) versus nonconcurrent (columns) category; shading = row percentage on a common 0-100% scale."""
+    mat=pd.crosstab(A.loc[A.direction.eq(direction),'reference_category'],A.loc[A.direction.eq(direction),'category']).reindex(index=m.LABELS,columns=m.LABELS,fill_value=0)
+    row=mat.div(mat.sum(axis=1),axis=0)
+    im=ax.imshow(row,cmap='Greys',vmin=0,vmax=1)
+    for y in range(3):
+        for x in range(3):
+            v=int(mat.iloc[y,x]);r=row.iloc[y,x]
+            ax.text(x,y,f"{100*r:.0f}%\n{v}/{int(mat.iloc[y].sum())}",ha='center',va='center',fontsize=7.5,linespacing=1.15,
+                    fontweight='bold' if x==y else 'normal',color='white' if r>.55 else 'black')
+    ax.set_xticks(range(3),['RO','IND','RI']);ax.set_yticks(range(3),['RO','IND','RI'])
+    ax.set_xlabel(f'{direction.capitalize()} AST category');ax.set_ylabel('Same-day category')
+    for sp in ax.spines.values():sp.set_visible(False)
+    return im
+
+def panels(name,ncols,titles,figsize,width_ratios=None):
+    fig,axs=plt.subplots(1,ncols,figsize=figsize,layout='constrained',width_ratios=width_ratios)
+    fig.set_constrained_layout_pads(w_pad=.06,h_pad=.06,wspace=.08)
+    for i,(ax,title) in enumerate(zip(axs,titles)):
+        ax.set_gid(f'{name}_panel_{chr(65+i)}');ax.set_title(f'{chr(65+i)}   {title}',loc='left',pad=6,fontweight='bold');ax.tick_params(length=2.5,width=.6)
+    return fig,list(axs)
+
+RCV=json.loads((m.TABLES/'rcv_summary.json').read_text());RUP,RDN=RCV['rcv_up'],RCV['rcv_down']
+RF=T('23_rcv_threshold_flag.csv').query("analysis=='primary'")
+with matplotlib.rc_context(MAINRC):
+    # Supplementary Fig. 9 (former Figure 1 A, C, D): individual changes and full category transitions.
+    fig,ax=panels('Supplementary_Figure_9',3,['Observed FAST change','Earlier vs same day','Later vs same day'],(7.2,2.75),[1.2,1,1])
+    for d,col,mk,fc in [('earlier',LIGHT,'^','white'),('later',DARK,'o',DARK)]:
+        g=A[A.direction.eq(d)]
+        ax[0].scatter(g.lag,g.delta_FAST,s=6,marker=mk,facecolors=fc,edgecolors=col,linewidths=.5,alpha=.75,label=f'{d.capitalize()} AST (n={len(g)})')
+    ax[0].axhline(0,color=GREY,lw=.8);ax[0].axvline(0,color=GREY,lw=.6,ls=':')
+    ax[0].set(xlabel='AST date minus scan date (days)',ylabel='Nonconcurrent minus same-day FAST',xlim=(-95,95),ylim=(-.65,1.0))
+    ax[0].legend(frameon=False,loc='upper left',ncol=1,markerscale=1.3,handletextpad=.3,fontsize=7)
+    transition_pct(ax[1],'earlier');transition_pct(ax[2],'later')
+    save(fig,'Supplementary_Figure_9','原图 1 的 A、C、D：每对比较的 FAST 变化与间隔；分类转移矩阵改为按同日类别的行百分比（n/N），两张矩阵共用 0–100% 色标。')
+
+    # Supplementary Fig. 10 (former Figure 2 A, B): threshold map and AST change against the RCV.
+    fig,ax=panels('Supplementary_Figure_10',2,['AST required for rule-in','AST change vs RCV'],(7.2,3.0))
     l=np.geomspace(2,40,180);cap=np.linspace(150,380,180);C,L=np.meshgrid(cap,l)
     b=-1.65+1.07*np.log(L)+2.66e-8*C**3;v=np.where(b>logit(.67),63.3/(b-logit(.67)),np.nan)
     pm=ax[0].pcolormesh(C,L,np.ma.masked_invalid(v),cmap='viridis',norm=LogNorm(20,500),rasterized=True,shading='auto')
@@ -234,28 +247,109 @@ with matplotlib.rc_context(MAINRC):
     ax[0].text(155,2.4,'Rule-in\nunreachable',fontsize=7.5,va='bottom')
     cb=plt.colorbar(pm,ax=ax[0],pad=.02,fraction=.06);cb.set_label('Required AST (U/L)',fontsize=8);cb.set_ticks([20,50,100,200,500],labels=['20','50','100','200','500']);cb.ax.minorticks_off();cb.ax.tick_params(labelsize=7.5)
     lr=np.log(A.AST/A.reference_AST)
-    hc=ax[1].hist([lr[A.direction.eq(d)] for d in ['earlier','later']],bins=np.linspace(-2,2,41),stacked=True,color=[DARK,'#F2D49B'],edgecolor=['white','#8A6A2A'],linewidth=.3,label=['Earlier AST','Later AST'])[0]
+    hc=ax[1].hist([lr[A.direction.eq(d)] for d in ['earlier','later']],bins=np.linspace(-2,2,41),stacked=True,color=[LIGHT,DARK],edgecolor='white',linewidth=.3,label=['Earlier AST','Later AST'])[0]
     ax[1].set_ylim(0,hc[-1].max()*1.5)
     ax[1].axvspan(np.log(1-RDN),np.log(1+RUP),facecolor='#EFEFEF',lw=0,zorder=0)
     ax[1].axvline(np.log(1-RDN),color='black',lw=.6,ls='--');ax[1].axvline(np.log(1+RUP),color='black',lw=.6,ls='--')
-    out=RF.query("label=='AST_change_beyond_RCV'").iloc[0]
+    out=RF.query("direction=='all' and label=='AST_change_beyond_RCV'").iloc[0]
     ax[1].text(.03,.97,f"Shaded: RCV\n(+{100*RUP:.1f}%/−{100*RDN:.1f}%)\nBeyond RCV: {100*out.proportion:.1f}%",transform=ax[1].transAxes,va='top',ha='left',fontsize=7.5)
     ax[1].set(xlabel='Log nonconcurrent / same-day AST',ylabel='Comparisons',xlim=(-2,2));ax[1].legend(frameon=False,loc='upper right')
-    x=np.arange(2)
-    for k,(lab,name,fc,hatch) in enumerate([('reclassified_if_flagged','Flagged (within RCV)',DARK,None),('reclassified_if_not_flagged','Not flagged',  'white','////')]):
-        g=RF[RF.label.eq(lab)].set_index('direction').loc[['earlier','later']];xs=x+(k-.5)*.36
-        ax[2].bar(xs,100*g.proportion,width=.34,color=fc,edgecolor=DARK,hatch=hatch,lw=.6,label=name)
-        ax[2].errorbar(xs,100*g.proportion,yerr=100*np.stack([g.proportion-g.ci_low,g.ci_high-g.proportion]),fmt='none',ecolor='black',capsize=2.5,lw=.7)
-        for xx,r in zip(xs,g.itertuples()):ax[2].text(xx,100*r.ci_high+1.5,f"{r.events}/{r.n}",ha='center',fontsize=7)
-    ax[2].set_xticks(x,['Earlier AST','Later AST']);ax[2].set(ylabel='Reclassified by same-day AST (%)',ylim=(0,62));ax[2].legend(frameon=False,loc='upper left')
-    clean(ax[3]);ax[3].set_xlim(0,1);ax[3].set_ylim(0,1)
-    steps=[(.89,'FAST calculated from LSM, CAP\nand the AST in hand','-'),(.645,'Report dates and values of laboratory\nresults; AST and ALT from one specimen','-'),
-           (.40,'Required AST within RCV?\nNo: category robust to\nbiological variation','--'),(.155,'Yes. AST before scan: request same-day AST\nAST after scan: report time mismatch\nSame-day AST: report as near a threshold',':')]
-    for y,txt,ls in steps:
-        ax[3].add_patch(Rectangle((.03,y-.10),.94,.20,facecolor='white',edgecolor='black',lw=.8,ls=ls))
-        ax[3].text(.5,y,txt,ha='center',va='center',fontsize=7.5)
-    for y0,y1 in [(.745,.79),(.50,.545),(.255,.30)]:ax[3].annotate('',(.5,y0),(.5,y1),arrowprops={'arrowstyle':'->','color':'black','lw':.7})
-    save(fig,'Figure_2','A 为达到 FAST 0.67 所需的 AST；B 为非同日/同日 AST 比值与 RCV 区间；C 为被标记与未标记结果的改判率；D 为建议的报告流程。')
+    save(fig,'Supplementary_Figure_10','原图 2 的 A、B：达到 FAST 0.67 所需的 AST；非同日/同日 AST 比值与 RCV 区间。')
+
+    # Figure 1: what AST timing does to FAST, and how FAST compares with the other scores on the same comparisons.
+    fig,ax=panels('Figure_1',2,['Direction of FAST change','Four scores, same comparisons'],(7.2,2.9),[1.05,1])
+    z=T('03_observed_anchor_reclassification.csv').query("dataset=='linked'").set_index('direction').loc[['earlier','later']]
+    for i,(d,r) in enumerate(z.iterrows()):
+        parts=[(r.downward,DARK,'Lower'),(r.comparisons-r.discordant,UNCH,'Unchanged'),(r.upward,LIGHT,'Higher')];left=0
+        for k,(cnt,col,lab) in enumerate(parts):
+            w=100*cnt/r.comparisons
+            ax[0].barh(i,w,left=left,height=.5,color=col,edgecolor='white',lw=.6,label=lab if i==0 else None)
+            txt=f'{w:.0f}%'
+            if w>=10:ax[0].text(left+w/2,i,txt,ha='center',va='center',fontsize=8,color='white' if col==DARK else 'black')
+            else:ax[0].text(left+w/2,i-.36,txt,ha='center',va='bottom',fontsize=7.5)
+            left+=w
+        ax[0].text(0,i+.33,f"Reclassified {int(r.discordant)}/{int(r.comparisons)}, {100*r.proportion:.1f}% (95% CI {100*r.ci_low:.1f}–{100*r.ci_high:.1f})",ha='left',va='top',fontsize=7.3)
+    ax[0].set_yticks(range(2),[f"Earlier AST\nn = {int(z.loc['earlier','comparisons'])}",f"Later AST\nn = {int(z.loc['later','comparisons'])}"])
+    ax[0].set(xlim=(0,100),ylim=(1.8,-1.05),xlabel='Comparisons (%)')
+    ax[0].legend(frameon=False,loc='upper left',bbox_to_anchor=(0,1.0),ncol=3,handlelength=1.2,columnspacing=1.0,fontsize=7.5,borderaxespad=0)
+    for sp in ('left',):ax[0].spines[sp].set_visible(False)
+    ax[0].tick_params(axis='y',length=0)
+    sc=T('29_reclassification_by_score.csv').query("set=='primary_all'").set_index('score')
+    rows=[('FAST','FAST'),('FIB4','FIB-4'),('Agile4','Agile 4'),('Agile3','Agile 3+')]
+    for i,(k,name) in enumerate(rows):
+        x=sc.loc[k]
+        ax[1].errorbar(100*x.proportion,i,xerr=[[100*(x.proportion-x.ci_low)],[100*(x.ci_high-x.proportion)]],fmt='o',ms=5,color='black',mfc='black' if k=='FAST' else 'white',capsize=2.5,lw=.9)
+        ax[1].text(41,i,'Reference' if k=='FAST' else f"{100*x.FAST_minus:.1f} ({100*x.FAST_minus_low:.1f} to {100*x.FAST_minus_high:.1f})".replace('-','−'),va='center',ha='left',fontsize=7.5)
+    ax[1].text(41,-.62,'FAST − score, points',ha='left',va='bottom',fontsize=7.3,fontweight='bold')
+    ax[1].set_yticks(range(4),[f"{n}\n{int(sc.loc[k,'reclassified'])}/{int(sc.loc[k,'comparisons'])}" for k,n in rows])
+    ax[1].set(xlim=(0,40),ylim=(3.6,-.95),xlabel='Category changed by AST timing (%)')
+    ax[1].set_xticks([0,10,20,30,40]);ax[1].spines['left'].set_visible(False);ax[1].tick_params(axis='y',length=0)
+    ax[1].spines['right'].set_visible(False)
+    ax[1].set_clip_on(False)
+    save(fig,'Figure_1','A：较早 AST 多使 FAST 上调、较晚 AST 多使其下调（按组内比较数标准化）；B：同一批 239 对比较中四个评分的改判率及与 FAST 的配对差值。')
+
+    # Figure 2: how the flag works (illustrative scans), how it performed, and what the report should say.
+    fig=plt.figure(figsize=(7.2,5.7),layout='constrained');fig.set_constrained_layout_pads(w_pad=.06,h_pad=.06,hspace=.06,wspace=.06)
+    gs=fig.add_gridspec(2,2,height_ratios=[1,1.35],width_ratios=[1,1.08])
+    ax=[fig.add_subplot(gs[0,:]),fig.add_subplot(gs[1,0]),fig.add_subplot(gs[1,1])]
+    for i,(a_,t_) in enumerate(zip(ax,['The flag: is a FAST threshold within the RCV of the AST used?','Reclassification by same-day AST','Reporting by AST date'])):
+        a_.set_gid(f'Figure_2_panel_{chr(65+i)}');a_.set_title(f'{chr(65+i)}   {t_}',loc='left',pad=6,fontweight='bold');a_.tick_params(length=2.5,width=.6)
+    def req(lsm,cap,c):
+        b_=-1.65+1.07*np.log(lsm)+2.66e-8*cap**3;return 63.3/(b_-logit(c)) if b_>logit(c) else np.nan
+    examples=[(1,9,300,36),(0,6,250,24)]   # hypothetical scans: (row, LSM kPa, CAP dB/m, AST in hand U/L)
+    lo,hi=10,250
+    for y,lsm,cap,ast in examples:
+        a35,a67=req(lsm,cap,.35),req(lsm,cap,.67)
+        edges=[lo,a35 if np.isfinite(a35) else hi,a67 if np.isfinite(a67) else hi,hi]
+        for (x0,x1),fc,lab in zip(zip(edges[:-1],edges[1:]),['white','#EDEDED','#CFCFCF'],['Rule-out','Indeterminate','Rule-in']):
+            if x1>x0:
+                ax[0].add_patch(Rectangle((x0,y-.28),x1-x0,.56,facecolor=fc,edgecolor='#9A9A9A',lw=.5,zorder=1))
+                if x1/x0>1.35:ax[0].text(np.sqrt(x0*x1),y-.19,lab,ha='center',va='center',fontsize=7,color='#555555')
+        r0,r1=ast*(1-RDN),ast*(1+RUP)
+        ax[0].add_patch(Rectangle((r0,y-.06),r1-r0,.24,facecolor='white',edgecolor='black',lw=.9,zorder=3))
+        ax[0].plot(ast,y+.06,'o',ms=5,color='black',zorder=4)
+        flagged=any(np.isfinite(q) and r0<=q<=r1 for q in (a35,a67))
+        for thr,c in ((a35,"0.35"),(a67,"0.67")):
+            if np.isfinite(thr):
+                ax[0].plot([thr,thr],[y-.28,y+.28],color='black',lw=1.0,ls='--',zorder=2)
+                ax[0].text(thr,y+.31,f'FAST {c} at AST {thr:.0f} U/L',ha='center',va='bottom',fontsize=7)
+        unreach='' if np.isfinite(a67) else '; rule-in unreachable'
+        ax[0].text(lo*1.02,y-.33,f"Scan {'1' if y==1 else '2'}: LSM {lsm} kPa, CAP {cap} dB/m, AST {ast} U/L{unreach}",ha='left',va='top',fontsize=7.3)
+        ax[0].text(hi*0.985,y,'Flagged' if flagged else 'Not flagged',ha='right',va='center',fontsize=8,fontweight='bold')
+    ax[0].set(xscale='log',xlim=(lo,hi),ylim=(-.62,1.55),xlabel='AST (U/L); box = RCV of the AST used (−25.4% to +34.1%), dashed = AST at which FAST crosses a cutoff')
+    ax[0].set_xticks([10,20,50,100,200],['10','20','50','100','200']);ax[0].xaxis.set_minor_formatter(plt.NullFormatter())
+    ax[0].set_yticks([]);ax[0].spines['left'].set_visible(False)
+    ax[0].text(.995,1.02,'Hypothetical scans',transform=ax[0].transAxes,ha='right',va='bottom',fontsize=7,style='italic')
+    ax[0].xaxis.label.set_size(7.5)
+    rows=[('all','All comparisons'),('earlier','Earlier AST'),('later','Later AST')]
+    for i,(d,name) in enumerate(rows):
+        for lab,off,mfc,leg in (('reclassified_if_flagged',-.13,'black','Flagged'),('reclassified_if_not_flagged',.13,'white','Not flagged')):
+            g=RF.query("direction==@d and label==@lab").iloc[0]
+            ax[1].errorbar(100*g.proportion,i+off,xerr=[[100*(g.proportion-g.ci_low)],[100*(g.ci_high-g.proportion)]],fmt='o',ms=5,color='black',mfc=mfc,capsize=2.5,lw=.9,label=leg if i==0 else None)
+            ax[1].text(100*g.ci_high+1.2,i+off,f'{int(g.events)}/{int(g.n)}',va='center',fontsize=7)
+    ax[1].set_yticks(range(3),[n for _,n in rows]);ax[1].set(xlim=(0,62),ylim=(2.6,-.6),xlabel='Reclassified by same-day AST (%)')
+    ax[1].spines['left'].set_visible(False);ax[1].tick_params(axis='y',length=0)
+    ax[1].legend(frameon=False,loc='lower right',fontsize=7.5,handletextpad=.3)
+    clean(ax[2]);ax[2].set_xlim(0,1);ax[2].set_ylim(0,1)
+    def fbox(x,y,w,h,txt,ls='-',bold=False,fs=7.4):
+        ax[2].add_patch(Rectangle((x-w/2,y-h/2),w,h,facecolor='white',edgecolor='black',lw=.8,ls=ls))
+        ax[2].text(x,y,txt,ha='center',va='center',fontsize=fs,fontweight='bold' if bold else 'normal',linespacing=1.2)
+    def arrow(p0,p1,lab=None,dx=0,dy=0):
+        ax[2].annotate('',p1,p0,arrowprops={'arrowstyle':'-|>','color':'black','lw':.7,'mutation_scale':7,'shrinkA':0,'shrinkB':0})
+        if lab:ax[2].text((p0[0]+p1[0])/2+dx,(p0[1]+p1[1])/2+dy,lab,fontsize=7.4,fontweight='bold',ha='center',va='center')
+    fbox(.5,.92,.96,.13,'Report FAST with the scan date and the date\nand value of AST; AST and ALT from one specimen')
+    fbox(.36,.70,.68,.12,'Required AST within the RCV\nof the AST used?',bold=True)
+    fbox(.88,.70,.22,.12,'Report\ncategory',ls='--')
+    arrow((.5,.855),(.5,.76)) if False else arrow((.36,.855),(.36,.76))
+    arrow((.70,.70),(.77,.70),'No',dy=.035)
+    arrow((.36,.64),(.36,.585),'Yes',dx=.05)
+    opts=[('AST before the scan','Request same-day AST'),('Same-day AST','State that the result\nlies near a threshold'),('AST after the scan','State the time mismatch;\nconsider repeat VCTE\nwith same-day blood')]
+    for j,(when,act) in enumerate(opts):
+        y=.49-.19*j
+        ax[2].text(.01,y,when,ha='left',va='center',fontsize=7.4,fontweight='bold')
+        fbox(.715,y,.56,.15,act,ls=':',fs=7.2)
+    ax[2].plot([.01,.99],[.575,.575],color='#BBBBBB',lw=.5)
+    save(fig,'Figure_2','A：两例假设扫描说明 RCV 标记的判断方法；B：被标记与未标记结果被同日 AST 改判的比例（总体及较早/较晚）；C：按 AST 测定日期区分的报告流程。')
 
 # Supplement 1: laboratory sources, AST measurement and timing.
 fig,ax=plate('Supplementary_Figure_1',['AST results by source','AST distribution by source','Collection to report',
@@ -364,12 +458,12 @@ save(fig,'Supplementary_Figure_6','公式给出精确边界和局部导数；图
 # Independent SVG groups, namespaced IDs, Chinese explanations below each plate.
 NS='http://www.w3.org/2000/svg'; INK='http://www.inkscape.org/namespaces/inkscape'
 def element(tag,**kw):return ET.Element('{'+NS+'}'+tag,**{k:str(v) for k,v in kw.items()})
-width=1900;tilew=900;tileh=760;totalh=330+5*tileh+950
+width=1900;tilew=900;tileh=760;totalh=330+6*tileh+950
 root=ET.Element('{'+NS+'}svg',nsmap={None:NS,'inkscape':'http://www.inkscape.org/namespaces/inkscape'},width=str(width),height=str(totalh),viewBox=f'0 0 {width} {totalh}')
 root.append(element('rect',x=0,y=0,width=width,height=totalh,fill='white'))
 def text(parent,x,y,content,size=25):
     t=element('text',x=x,y=y,fill='#171717',**{'font-family':'Arial, PingFang SC, sans-serif','font-size':size});t.text=content;parent.append(t)
-text(root,35,55,'VCTE–FAST v17 (Clin Biochem)：2 张主图 + 8 张补充图 + 数学公式',34)
+text(root,35,55,'VCTE–FAST v17 (Clin Biochem)：2 张主图 + 10 张补充图 + 数学公式',34)
 text(root,35,103,'蓝色：较早 AST / rule-out；橙色：较晚 AST / indeterminate；莓红：rule-in；灰色：未捕获 / 参照',23)
 text(root,35,150,'数值来自 2026-10-03 v13 双来源实验室连接冻结集。每张组图及内部面板为独立 SVG 组；原投稿图未覆盖。',22)
 for i,item in enumerate(MAN):
@@ -405,7 +499,7 @@ formula_list=[r'$\eta=-1.65+1.07\ln L+2.66\times10^{-8}C^3-63.3/A$',r'$\mathrm{F
 for i,t in enumerate(formula_list):formula_ax.text(.01,.97-i*.12,t,fontsize=24,va='top')
 with matplotlib.rc_context({'svg.fonttype':'path'}):formula_fig.savefig(F/'Formula_Shelf.svg')
 plt.close(formula_fig)
-fx=ET.parse(str(F/'Formula_Shelf.svg')).getroot();y=215+5*tileh
+fx=ET.parse(str(F/'Formula_Shelf.svg')).getroot();y=215+6*tileh
 text(root,35,y,'可拆取公式区：公式为矢量数学字形；图表标签保留文本',28)
 fx.set('x','35');fx.set('y',str(y+30));fx.set('width','1830');fx.set('height','610')
 # Namespace the formula glyph IDs as well.
