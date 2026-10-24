@@ -1,0 +1,41 @@
+{
+  "flow": {
+    "anchor_comparisons": 879,
+    "with_reference_ALT": 844,
+    "with_both_ALT": 820,
+    "analysis_set": 239,
+    "analysis_patients": 172,
+    "secondary_with_comparator_PLT": 105
+  },
+  "mechanism": {
+    "sd_dlog": {
+      "AST": 0.567,
+      "ALT": 0.7141,
+      "AST_over_ALT": 0.4703,
+      "AST_over_sqrtALT": 0.3793
+    },
+    "corr_dlogAST_dlogALT": 0.7535,
+    "median_abs_change": {
+      "FAST": 0.363382269904009,
+      "Agile3": 0.23697538961038944,
+      "Agile4": 0.33912422077922066,
+      "FIB4": 0.13724808089365578
+    }
+  },
+  "decision_rule": {
+    "FAST_minus_Agile3": 0.11715481171548119,
+    "ci": [
+      0.05751849702596838,
+      0.1764705882352941
+    ],
+    "promote_to_main_result": true
+  },
+  "case_mix": {
+    "MASLD_compatible": 43,
+    "HBsAg_positive": 135,
+    "diabetes": 48,
+    "male": 173,
+    "median_PLT": 190.0,
+    "median_LSM": 9.36793327
+  }
+}

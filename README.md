@@ -4,9 +4,9 @@
 
 Analysis code and aggregate results for:
 
-> Yu H-w, Ying H, Zhang Z, Qiao C, Dong C. *Aspartate aminotransferase from another date changes FibroScan-AST classification: reference change values identify results at risk.* Manuscript submitted to Clinica Chimica Acta (2026).
+> Yu H-w, Ying H, Zhang Z, Qiao C, Dong C. *Aspartate aminotransferase from another date changes FibroScan-AST more often than Agile classification: reference change values identify results at risk.* Manuscript submitted to Clinical Biochemistry (2026).
 
-The FibroScan-aspartate aminotransferase (FAST) score combines liver stiffness (LSM) and controlled attenuation parameter (CAP) from vibration-controlled transient elastography with AST. In routine practice the AST is often measured on another date. This study compared FAST calculated with the nearest earlier or later AST (≤90 days) with FAST from same-day AST for the same scan, and evaluated a laboratory flag based on the reference change value (RCV) of AST.
+The FibroScan-aspartate aminotransferase (FAST) score combines liver stiffness (LSM) and controlled attenuation parameter (CAP) from vibration-controlled transient elastography with AST. In routine practice the AST is often measured on another date. This study compared FAST calculated with the nearest earlier or later AST (≤90 days) with FAST from same-day AST for the same scan, repeated the comparison for Agile 3+, Agile 4 and FIB-4, and evaluated a laboratory flag based on the reference change value (RCV) of AST.
 
 ## Contents
 
@@ -18,6 +18,8 @@ The FibroScan-aspartate aminotransferase (FAST) score combines liver stiffness (
 | `code/02b_rcv_threshold.py` | Scan-specific AST thresholds for FAST 0.35 and 0.67 and the RCV flag |
 | `code/02c_clinical_actions.py` | Changes in the implied clinical action |
 | `code/03_build_figures.py`, `code/03b_graphical_abstract.py` | Figures and graphical abstract |
+| `code/08_hybrid_score_timing.py` | Agile 3+, Agile 4 and FIB-4 on the same comparisons (`results/29_*`; added in v1.1.0) |
+| `code/09_flag_benchmark.py` | Post hoc: RCV flag versus simpler rules at equal workload, chemistry line, selection into paired comparisons (`results/30_*`; added in v1.1.0) |
 | `results/` | Aggregate result tables (CSV, JSON, TSV) behind every number in the manuscript |
 | `results/external_reference/` | FAST perturbation results in six public cohorts |
 
@@ -33,7 +35,12 @@ Python 3.11.15; numpy 2.3.5; pandas 2.3.3; scipy 1.16.3; scikit-learn 1.9.0; sta
 
 ## Citation
 
-Please cite the archived release: https://doi.org/10.5281/zenodo.23319355 (v1.0.0).
+Please cite the archived release. v1.1.0 (Clinical Biochemistry submission): DOI to be added after archiving. v1.0.0: https://doi.org/10.5281/zenodo.23319355.
+
+## Versions
+
+- v1.1.0 (2026-10-24): adds the Agile 3+, Agile 4 and FIB-4 comparison (amendment 29) and post hoc checks of the RCV flag (amendment 30); figures and banner graphical abstract updated; FAST formula written with the natural logarithm (ln), as in the original derivation.
+- v1.0.0 (2026-10-12): FAST analyses.
 
 ## License
 

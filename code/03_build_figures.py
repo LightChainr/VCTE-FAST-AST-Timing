@@ -249,8 +249,8 @@ with matplotlib.rc_context(MAINRC):
         for xx,r in zip(xs,g.itertuples()):ax[2].text(xx,100*r.ci_high+1.5,f"{r.events}/{r.n}",ha='center',fontsize=7)
     ax[2].set_xticks(x,['Earlier AST','Later AST']);ax[2].set(ylabel='Reclassified by same-day AST (%)',ylim=(0,62));ax[2].legend(frameon=False,loc='upper left')
     clean(ax[3]);ax[3].set_xlim(0,1);ax[3].set_ylim(0,1)
-    steps=[(.89,'FAST calculated from LSM, CAP\nand the AST in hand','-'),(.645,'Report AST date and value\nand interval from the scan','-'),
-           (.40,'Required AST within RCV?\nNo: category robust to\nbiological variation','--'),(.155,'Yes, AST nonconcurrent: recommend\nsame-day AST. Yes, same-day:\nreport as near a threshold',':')]
+    steps=[(.89,'FAST calculated from LSM, CAP\nand the AST in hand','-'),(.645,'Report dates and values of laboratory\nresults; AST and ALT from one specimen','-'),
+           (.40,'Required AST within RCV?\nNo: category robust to\nbiological variation','--'),(.155,'Yes. AST before scan: request same-day AST\nAST after scan: report time mismatch\nSame-day AST: report as near a threshold',':')]
     for y,txt,ls in steps:
         ax[3].add_patch(Rectangle((.03,y-.10),.94,.20,facecolor='white',edgecolor='black',lw=.8,ls=ls))
         ax[3].text(.5,y,txt,ha='center',va='center',fontsize=7.5)
@@ -345,7 +345,7 @@ save(fig,'Supplementary_Figure_5','六队列仅验证公式敏感性与边界结
 fig,ax=plate('Supplementary_Figure_6',['FAST equation','Threshold geometry','Exact AST-only change',
                                      'FAST dependence on AST','LSM–CAP scan density','Local boundary margins'])
 for i in range(3):clean(ax[i])
-ax[0].text(.01,.69,r'$\eta=-1.65+1.07\log L$',fontsize=20);ax[0].text(.01,.43,r'$\quad+2.66\times10^{-8}C^3-63.3/A$',fontsize=19);ax[0].text(.01,.15,r'$\mathrm{FAST}=\mathrm{expit}(\eta)$',fontsize=19)
+ax[0].text(.01,.69,r'$\eta=-1.65+1.07\ln L$',fontsize=20);ax[0].text(.01,.43,r'$\quad+2.66\times10^{-8}C^3-63.3/A$',fontsize=19);ax[0].text(.01,.15,r'$\mathrm{FAST}=\mathrm{expit}(\eta)$',fontsize=19)
 ax[1].text(.01,.73,r'$\mathrm{FAST}_{\max}=\mathrm{expit}(B)$',fontsize=19);ax[1].text(.01,.44,r'$A_c=\frac{63.3}{B-\mathrm{logit}(c)}$',fontsize=22);ax[1].text(.01,.15,r'$B>\mathrm{logit}(c)$',fontsize=19)
 ax[2].text(.01,.70,r'$\Delta\eta=63.3(1/A_0-1/A_\tau)$',fontsize=18);ax[2].text(.01,.39,r'$\frac{\partial\eta}{\partial A}=\frac{63.3}{A^2}$',fontsize=24);ax[2].text(.01,.10,r'$\frac{\partial\eta}{\partial\log A}=\frac{63.3}{A}$',fontsize=24)
 aa=np.geomspace(5,1000,200)
@@ -369,7 +369,7 @@ root=ET.Element('{'+NS+'}svg',nsmap={None:NS,'inkscape':'http://www.inkscape.org
 root.append(element('rect',x=0,y=0,width=width,height=totalh,fill='white'))
 def text(parent,x,y,content,size=25):
     t=element('text',x=x,y=y,fill='#171717',**{'font-family':'Arial, PingFang SC, sans-serif','font-size':size});t.text=content;parent.append(t)
-text(root,35,55,'VCTE–FAST v16 (CCA)：2 张主图 + 8 张补充图 + 数学公式',34)
+text(root,35,55,'VCTE–FAST v17 (Clin Biochem)：2 张主图 + 8 张补充图 + 数学公式',34)
 text(root,35,103,'蓝色：较早 AST / rule-out；橙色：较晚 AST / indeterminate；莓红：rule-in；灰色：未捕获 / 参照',23)
 text(root,35,150,'数值来自 2026-10-03 v13 双来源实验室连接冻结集。每张组图及内部面板为独立 SVG 组；原投稿图未覆盖。',22)
 for i,item in enumerate(MAN):
@@ -396,7 +396,7 @@ for i,item in enumerate(MAN):
     for j,line in enumerate(chunks):text(group,x,y+660+j*25,line,20)
 
 formula_fig,formula_ax=plt.subplots(figsize=(24,8));formula_ax.set_axis_off()
-formula_list=[r'$\eta=-1.65+1.07\log L+2.66\times10^{-8}C^3-63.3/A$',r'$\mathrm{FAST}=\mathrm{expit}(\eta),\quad B=-1.65+1.07\log L+2.66\times10^{-8}C^3$',
+formula_list=[r'$\eta=-1.65+1.07\ln L+2.66\times10^{-8}C^3-63.3/A$',r'$\mathrm{FAST}=\mathrm{expit}(\eta),\quad B=-1.65+1.07\ln L+2.66\times10^{-8}C^3$',
  r'$\sup_{A>0}\mathrm{FAST}=\mathrm{expit}(B),\quad A_c=63.3/[B-\mathrm{logit}(c)]$',r'$D_c=\log(A_c/A),\quad R=\min_{c\in\mathcal{B}}|D_c|$',
  r'$\Delta\eta_{AST}=63.3(1/A_0-1/A_\tau),\quad\Delta\mathrm{FAST}=\mathrm{FAST}_\tau-\mathrm{FAST}_0$',
  r'$\partial\eta/\partial A=63.3/A^2,\quad\partial\eta/\partial\log A=63.3/A$',

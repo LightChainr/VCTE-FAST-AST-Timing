@@ -1,0 +1,13 @@
+{
+  "benchmark_k": 421,
+  "scenario": {
+    "scored_scans": 4287,
+    "nonconcurrent_scans": 1621,
+    "earlier_scored": 755,
+    "earlier_flagged": 276,
+    "later_scored": 866,
+    "later_flagged": 352
+  },
+  "chemistry_line_known": 823,
+  "chemistry_line_total": 879
+}
