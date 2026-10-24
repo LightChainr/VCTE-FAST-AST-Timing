@@ -1,6 +1,6 @@
 # VCTE-FAST-AST-Timing
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23319355.svg)](https://doi.org/10.5281/zenodo.23319355)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23611397.svg)](https://doi.org/10.5281/zenodo.23611397)
 
 Analysis code and aggregate results for:
 
@@ -35,7 +35,7 @@ Python 3.11.15; numpy 2.3.5; pandas 2.3.3; scipy 1.16.3; scikit-learn 1.9.0; sta
 
 ## Citation
 
-Please cite the archived release. v1.1.0 (Clinical Biochemistry submission): DOI to be added after archiving. v1.0.0: https://doi.org/10.5281/zenodo.23319355.
+Please cite the archived release. v1.1.0 (Clinical Biochemistry submission): https://doi.org/10.5281/zenodo.23611397. All versions: https://doi.org/10.5281/zenodo.23319354. v1.0.0: https://doi.org/10.5281/zenodo.23319355.
 
 ## Versions
 
